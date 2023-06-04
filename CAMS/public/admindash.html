@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMS - Admin Dashboard</title>
+
+    <!-- BOOTSTRAP API -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    
+    <!-- LOCAL CSS -->
+    <link rel="stylesheet" href="./css/master.css">
+
+    <!-- BOOTSTRAP JS FILES -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+    <!-- JS FOR FETCHING EMPID OF LOGGED IN USER FROM THE DB -->
+    <script>
+        fetch (`/api/getempId`)
+        .then (response => response.json())
+        .then (data => {
+            const empID = data.empid;
+            document.getElementById('empID').textContent = empID;
+        })
+        .catch(error => {
+            console.log(error);
+            alert('An error occured while fetching user data');
+        })
+
+        // JS FOR DYNAMICALLY FETCHING THE DATA AND INSERTING INTO SEPARATE DIVS
+        fetch('/api/content')
+        .then(response => response.json())
+        .then(data => {
+            const contentBlock = document.getElementById('contentBlock');
+            data.forEach(item => {
+                const row = document.createElement('div');
+                row.classList.add('row', 'text-center', 'm-auto', 'px-2', 'py-4', 'border', 'border-0', 'border-bottom', 'border-black');
+
+                const col1 = document.createElement('div');
+                col1.classList.add('col-3');
+                const nameLink = document.createElement('a');
+                nameLink.href = `/maindash.html`;
+                nameLink.classList.add('text-danger-emphasis');
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = item.name;
+                nameLink.appendChild(nameSpan);
+                col1.appendChild(nameLink);
+                row.appendChild(col1);
+
+                const col2 = document.createElement('div');
+                col2.classList.add('col-3');
+                const datetimeSpan = document.createElement('span');
+                datetimeSpan.textContent = item.datetime;
+                col2.appendChild(datetimeSpan);
+                row.appendChild(col2);
+
+                const col3 = document.createElement('div');
+                col3.classList.add('col-2');
+                const attendanceSpan = document.createElement('span');
+                attendanceSpan.textContent = item.attendance;
+                col3.appendChild(attendanceSpan);
+                row.appendChild(col3);
+
+                const col4 = document.createElement('div');
+                col4.classList.add('col-4');
+                const remarksSpan = document.createElement('span');
+                remarksSpan.textContent = item.remarks;
+                col4.appendChild(remarksSpan);
+                row.appendChild(col4);
+
+                contentBlock.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.log(error);
+            alert('An error occurred while fetching data');
+        });
+
+    </script>
+</head>
+<body>
+
+    <div class="container1">
+
+        <!-- HEADING SECTION -->
+        <div class="text-center d-flex">
+            <img class="align-self-start pt-2 ps-2" src="/img/logo.png" alt="cams" height="120" />
+            <div class="text-center m-auto pt-3">
+                <h2>ADMINISTRATOR DASHBOARD</h2>
+            </div>
+        </div>
+
+        <!-- NAVIGATION BAR -->
+        <nav class="navbar navbar-expand-lg p-0 mt-4 mb-1 navibox">
+            <div class="container-fluid">
+                <a class="navbar-brand text-success pt-0 ps-2"><span id="empID">EmpID</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse text-dark pt-2 pb-3 mx-4" id="navbarNavAltMarkup">
+                    <div class="navbar-nav pt-1">
+                        <a class="nav-link text-dark active" href="#">Dashboard</a>
+                        <a class="nav-link text-secondary" href="/register">Add Employee</a>
+                        <a class="nav-link text-secondary" href="">Export Reports</a>
+                        <a class="nav-link text-secondary" href="/syslog">System Logs</a>
+                        <a class="nav-link text-secondary" href="/complaint">Complaints</a>
+                        <a class="nav-link btn btn-outline-danger" type="submit" href="/auth/logout">Logout</a>
+                    </div>
+
+                    <!-- NAVIGATION SEARCH BAR -->
+                    <form class="d-flex ms-auto pt-1" role="search">
+                        <input class="form-control pt-0 pb-0 me-1 border border-dark" type="search" placeholder="Search Employees">
+                        <button class="btn btn-outline-success m-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <!-- TITLE SECTION -->
+        <div class="row border border-dark m-auto p-2 text-center bg-secondary-subtle text-dark-emphasis">
+            <div class="col-3">
+                <strong>Employee Name</strong>
+            </div>
+            <div class="col-3">
+                <strong style="word-wrap: break-word;">DateTime</strong>
+            </div>
+            <div class="col-2">
+                <strong style="word-wrap: break-word;">Attendance (Today)</strong>
+            </div>
+            <div class="col-4">
+                <strong>Remarks</strong>
+            </div>    
+        </div>
+
+        <!-- CONTENT BLOCK (ROWS BEING ADDED AUTOMATICALLY) -->
+        <div id="contentBlock"></div>
+
+        <!-- COUNT OF TOTAL AND PRESENT EMPLOYEES -->
+        <div class="row footer m-auto mt-5 p-3 border border-primary-subtle">
+            <div class="col-lg-6 col-sm-12 text-lg-center text-sm-start">
+                <strong><em>Total Employees:</em></strong><span class="ms-2">6</span>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <strong><em>Present Employees (today): </em></strong><span class="ms-2">3</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+<!-- TEMPLATE CODE -->
+        <!-- <div class="row text-center m-auto px-2 py-4 border border-0 border-bottom border-black">
+            <div class="col-3">
+                <a href="" class="text-danger-emphasis"><span id="name"></span> </a>
+            </div>
+            <div class="col-3">
+                <span id="designation"></span>
+            </div>
+            <div class="col-2">
+                <span id="attendance"></span>
+            </div>
+            <div class="col-4">
+                <span id="remarks"></span>
+            </div>
+        </div> -->
