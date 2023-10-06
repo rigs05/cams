@@ -1,0 +1,26 @@
+{
+  "name": "my_sql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^10.0.0",
+    "env": "^0.0.2",
+    "express": "^4.17.2",
+    "express-jwt": "^8.4.1",
+    "express-mysql-session": "^3.0.0",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.7"
+  }
+}
