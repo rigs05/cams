@@ -63,7 +63,7 @@ CREATE TABLE `syslog` (
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Sample Data
+-- Sample Data (to be inserted in MySQL workbench)
 
 INSERT INTO `employee` (`empID`, `name`, `dob`, `mobile`, `email`, `address`, `usertype`) VALUES
 (101, 'Ritik Chawla', '2000-03-12', '9876543210', 'ritik@gmail.com', '', 'Admin');

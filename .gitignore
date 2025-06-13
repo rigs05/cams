@@ -1,3 +1,4 @@
 node_modules
 .env
-cams.sql
+/cams.sql
+/camsSQLXAMPP.sql

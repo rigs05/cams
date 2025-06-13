@@ -145,7 +145,10 @@ exports.register = async (req, res) => {
 
       // Checking if Email already exists in the Database
       if (emailExists) {
-        return res.json({ status: 'error', error: 'Email has already been registered' });
+        // res.json({ status: 'error', error: 'Email has already been registered' });
+        res.redirect('/auth/register');
+        console.log("Email already exists in the database");
+        return;
       }
       
       // HASHING THE PASSWORD
@@ -269,87 +272,13 @@ exports.fback = async (req, res) => {
 
 // LOGOUT MODULE
 exports.logout = (req, res) => {
-    res.cookie('userSave', 'logout', {
-        expires: new Date(Date.now() + 2 * 1000),
-        httpOnly: true
-    });
-    res.status(200).redirect("/login");
+  if (req.cookies.userSave) {
+    res.clearCookie('userSave');
+  }
+  // res.status(200).redirect("/login.html");
+  res.redirect('/login');
 }
-
-
-
-
-
-
-
-/************************************************************************************************** */
-// KOODA
-
-
-
-// export :
-    // exports.register = (req, res) => {
-    //     console.log ('test 2');
-    //     console.log(req.body);
-    //     const { name, email, password, passwordConfirm } = req.body;
-    //     db.query('SELECT email from employee WHERE email = ?', [email], async (err, results) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             if (results.length > 0) {
-    //                 return res.sendFile(__dirname + "request.html", {
-    //                     message: 'The email is already in use'
-    //                 })
-    //             } else if (password != passwordConfirm) {
-    //                 return res.sendFile(__dirname + "request.html", {
-    //                     message: 'Password dont match'
-    //                 });
-    //             }
-    //         }
-
-    //         let hashedPassword = await bcrypt.hash(password, 8);
-    //         console.log(hashedPassword);
-
-    //         db.query('INSERT INTO employee SET ?', { name: name, email: email, password: hashedPassword }, (err, results) => {
-    //             if (err) {
-    //                 console.log(err);
-    //             } else {
-    //                 return res.sendFile(__dirname + "request.html", {
-    //                     message: 'User registered'
-    //                 });
-    //             }
-    //         })
-    //     })
-    //     res.send("Form submitted");
-    // }
-
-
-// REDUNDANT CODE:
-// exports.register = (req, res) => {
-//     console.log("test 1");
-//     console.log (req.body);
-//     const { userID, empName, empDOB, empMobile, empMail, empAdd, empPass, empDept, empDesig } = req.body;
-
-
-//     db.query ( "SELECT email FROM employee WHERE email = ?", [empMail], async (err, result) => {
-//         if (err) throw err;
-//         if (result[0]) return res.json({status: "error", error: "Email has already been registered" })
-//         else {
-//             db.query ('INSERT INTO employee SET ?', { name: empName, dob: empDOB, mobile: empMobile, email: empMail, address: empAdd}, (error, results) =>{
-//                 if (error) throw error;
-//                 console.log("success in employee db");
-//                 db.query ( 'INSERT INTO management SET ?', {userID: userID, password: empPass }, (err1, res1) => {
-//                     if (err1) throw err1;
-//                     console.log ("success in management db");
-//                     db.query ( 'INSERT INTO official SET ?', {designation: empDesig, department: empDept }, (err2, res2) =>{
-//                         if (err2) throw err2;
-//                         // console.log ("success in official db");
-//                         return("success in official db");
-//                     })
-//                 })
-//                 return results.json({ status: "success", success: "User registered"});
-//             })
-//         }
-//     })
-//     res.send("Form submitted");
-// }
+    // res.cookie('userSave', 'logout', {
+    //     expires: new Date(Date.now() + 2 * 1000),
+    //     httpOnly: true
+    // });
