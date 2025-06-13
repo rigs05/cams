@@ -1,0 +1,22 @@
+/* Custom background in body and font insertion */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-image: url(/img/minimal1.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+/* Wrapping container over body */
+.container1 {
+    width: 80%;
+    margin:20px auto;
+    border-radius:10px;
+    background-color:rgb(225, 246, 248);
+}
+
+/* Navigation bar */
+.navibox {
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+}
+
