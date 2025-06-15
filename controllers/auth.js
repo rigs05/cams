@@ -112,7 +112,6 @@ exports.login = async (req, res) => {
                   return res.status(200).redirect(`/admindash.html`);
 
                 } else if (usertype === 'Emp') {
-                  console.log("gd --- 4 --- "+usertype);
                   res.cookie('userSave', token, cookieOptions);
                   return res.status(200).redirect(`/maindash.html`);
                 }
@@ -145,9 +144,8 @@ exports.register = async (req, res) => {
 
       // Checking if Email already exists in the Database
       if (emailExists) {
-        // res.json({ status: 'error', error: 'Email has already been registered' });
-        res.redirect('/auth/register');
-        console.log("Email already exists in the database");
+        console.log("Email already exists in the database.");
+        res.status(401).send(`<script>alert("Email has already been registered"); window.location.href = '/register';</script>`);
         return;
       }
       
@@ -200,14 +198,17 @@ exports.register = async (req, res) => {
         );
       });
   
-      // PRINTING AND REDIRECTING TO LOGIN PAGE AFTER SUCCESSFUL REGISTRATION
+      // PRINTING AND REDIRECTING BACK TO REGISTER PAGE AFTER SUCCESSFUL REGISTRATION
       console.log('Data inserted successfully into all tables');
-      // res.status(401).send(`<script>alert("User successfully registered, Please Login to continue."); window.location.href = '/login.html';</script>`)
-      res.status(401).send(`<script>alert("User successfully registered, Please Login to continue.");</script>`)
-      res.redirect('/register');
+      res.status(401).send(
+        `<script>alert("User successfully registered, Please Login to mark attendance.");
+        window.location.href = '/register';</script>`
+      )
+      return;
     } catch (error) {   // PROMPTLY HANDLING ERRORS
       console.error(error);
-      return res.json({ status: 'error', error: 'An error occurred during registration' });
+      // return res.json({ status: 'error', error: 'An error occurred during registration' });
+      return res.status(500).send(`<script>alert("An error occurred during registration"); window.location.href = '/register';</script>`);
     }
 }};
 

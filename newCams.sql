@@ -66,7 +66,7 @@ CREATE TABLE `syslog` (
 -- Sample Data (to be inserted in MySQL workbench)
 
 INSERT INTO `employee` (`empID`, `name`, `dob`, `mobile`, `email`, `address`, `usertype`) VALUES
-(101, 'Ritik Chawla', '2000-03-12', '9876543210', 'ritik@gmail.com', '', 'Admin');
+(101, 'Sunny Chaudhary', '2000-11-05', '9876543210', 'sunny@test.com', '', 'Admin');
 
 INSERT INTO `attendance` (`empID`, `datetime`, `presabs`) VALUES
 (101, '2025-06-09 21:41:56', 'Present');
@@ -75,7 +75,9 @@ INSERT INTO `feedback_complaint` (`empID`, `feedcomplaint`, `type`) VALUES
 (101, 'test1', 'complaint');
 
 INSERT INTO `management` (`empID`, `userID`, `password`, `remarks`) VALUES
-(101, 'ritik01', '$2a$10$cSkaPG60AgwdFsX6RFm2muHjr/w553c48p2S.OZQA9QQvyVJv.jg2', '');
+(101, 'sunny01', '$2a$10$cSkaPG60AgwdFsX6RFm2muHjr/w553c48p2S.OZQA9QQvyVJv.jg2', '');
 
 INSERT INTO `official` (`empID`, `designation`, `department`, `dateofjoin`, `supervisor`) VALUES
 (101, 'software developer', 'finance', '2025-06-08 16:02:57', NULL);
+
+-- Sample Password for login: sunny01: qwerty51!
